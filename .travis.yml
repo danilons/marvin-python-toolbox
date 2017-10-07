@@ -1,11 +1,11 @@
 language: python
 sudo: required
 dist: trusty
-python: 2.7
 
 matrix:
     include:
         - os: linux
+          python: 2.7
         - os: osx
 
 before_install:
