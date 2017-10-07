@@ -1,15 +1,12 @@
 language: python
 sudo: required
 dist: trusty
+python: 2.7
 
 matrix:
     include:
         - os: linux
-          python: 2.7
         - os: osx
-          python: 2.7
-        - os: linux
-          python: 3.3
 
 before_install:
   - curl https://d3kbcqa49mib13.cloudfront.net/spark-2.1.1-bin-hadoop2.6.tgz -o ./spark-2.1.1-bin-hadoop2.6.tgz
