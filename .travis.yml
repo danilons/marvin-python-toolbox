@@ -25,6 +25,7 @@ before_install:
   - sudo pip install virtualenvwrapper
 
 install:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; mkvirtualenv marvin-env             ; fi
   - make marvin
   - pip install codecov
 
