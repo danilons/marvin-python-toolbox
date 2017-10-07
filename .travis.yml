@@ -24,7 +24,7 @@ before_install:
   - sudo pip install --upgrade pip
   - sudo pip install virtualenvwrapper
   - source virtualenvwrapper.sh
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; mkvirtualenv marvin-env             ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then mkvirtualenv marvin-env         ; fi
 
 install:
   - make marvin
