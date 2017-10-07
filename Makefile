@@ -55,7 +55,7 @@ clean-reports:
 	rm -f .coverage
 
 clean-deps:
-	pip freeze | grep -v "^-e" | xargs pip uninstall -y
+	pip freeze | grep -v "^-e" | xargs -r pip uninstall -y
 
 clean: clean-build clean-pyc clean-reports clean-deps
 
