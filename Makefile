@@ -27,6 +27,8 @@ help:
 	@echo "        Remove build artifacts."
 	@echo "    clean-reports"
 	@echo "        Remove coverage reports."
+	@echo "    clean-deps"
+	@echo "        Remove marvin setup.py dependencies."
 	@echo "    grpc"
 	@echo "        Build grpc stubs."
 
