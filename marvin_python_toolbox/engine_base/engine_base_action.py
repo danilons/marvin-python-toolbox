@@ -43,6 +43,7 @@ class EngineBaseAction():
     _default_root_path = None
     _previous_step = None
     _is_remote_calling = False
+    _local_saved_objects = {}
 
     def __init__(self, **kwargs):
         self.action_name = self.__class__.__name__
@@ -77,8 +78,7 @@ class EngineBaseAction():
             logger.info("Saving object to {}".format(object_file_path))
             serializer.dump(obj, object_file_path, protocol=2, compress=3)
             logger.info("Object {} saved!".format(object_reference))
-            logger.info("Removing object {} from memory..".format(object_reference))
-            setattr(self, object_reference, None)
+            self._local_saved_objects[object_reference] = object_file_path
 
     def _load_obj(self, object_reference):
         if getattr(self, object_reference, None) is None and self._persistence_mode == 'local':
@@ -88,6 +88,11 @@ class EngineBaseAction():
             logger.info("Object {} loaded!".format(object_reference))
 
         return getattr(self, object_reference)
+
+    def _release_local_saved_objects(self):
+        for object_reference in self._local_saved_objects.keys():
+            logger.info("Removing object {} from memory..".format(object_reference))
+            setattr(self, object_reference, None)
 
     @classmethod
     def retrieve_obj(self, object_file_path):
@@ -154,6 +159,8 @@ class EngineBaseBatchAction(EngineBaseAction):
         params = json.loads(request.params) if request.params else None
 
         self._pipeline_execute(params=params)
+
+        self._release_local_saved_objects()
 
         logger.info("Handling returned message from engine action...")
         response_message = BatchActionResponse(message="Done")
