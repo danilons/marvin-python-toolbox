@@ -94,6 +94,8 @@ class EngineBaseAction():
             logger.info("Removing object {} from memory..".format(object_reference))
             setattr(self, object_reference, None)
 
+        self._local_saved_objects = {}
+
     @classmethod
     def retrieve_obj(self, object_file_path):
         logger.info("Retrieve object from {}".format(object_file_path))
