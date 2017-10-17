@@ -540,6 +540,7 @@ def engine_httpserver(ctx, action, params_file, initial_dataset, dataset, model,
 
     try:
         grpcserver = subprocess.Popen(['marvin', 'engine-grpcserver', '-a', action, '-w', str(max_workers)])
+        time.sleep(5)
 
     except:
         logger.exception("Could not start grpc server!")

@@ -77,6 +77,8 @@ class EngineBaseAction():
             logger.info("Saving object to {}".format(object_file_path))
             serializer.dump(obj, object_file_path, protocol=2, compress=3)
             logger.info("Object {} saved!".format(object_reference))
+            logger.info("Removing object {} from memory..".format(object_reference))
+            setattr(self, object_reference, None)
 
     def _load_obj(self, object_reference):
         if getattr(self, object_reference, None) is None and self._persistence_mode == 'local':
