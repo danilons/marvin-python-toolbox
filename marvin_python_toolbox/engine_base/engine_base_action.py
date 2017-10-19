@@ -76,7 +76,10 @@ class EngineBaseAction():
         if self._persistence_mode == 'local':
             object_file_path = self._get_object_file_path(object_reference)
             logger.info("Saving object to {}".format(object_file_path))
-            serializer.dump(obj, object_file_path, protocol=2, compress=3)
+            try:
+                serializer.dump(obj, object_file_path, protocol=2, compress=3)
+            except:
+                obj.save(object_file_path)
             logger.info("Object {} saved!".format(object_reference))
             self._local_saved_objects[object_reference] = object_file_path
 
@@ -84,7 +87,11 @@ class EngineBaseAction():
         if getattr(self, object_reference, None) is None and self._persistence_mode == 'local':
             object_file_path = self._get_object_file_path(object_reference)
             logger.info("Loading object from {}".format(object_file_path))
-            setattr(self, object_reference, serializer.load(object_file_path))
+            try:
+                setattr(self, object_reference, serializer.load(object_file_path))
+            except:
+                from keras.models import load_model
+                setattr(self, object_reference, load_model(object_file_path)) 
             logger.info("Object {} loaded!".format(object_reference))
 
         return getattr(self, object_reference)
